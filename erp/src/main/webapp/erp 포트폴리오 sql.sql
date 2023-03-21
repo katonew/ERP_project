@@ -17,6 +17,8 @@ create table cust( -- 거래처테이블
     custemp varchar(20), 					-- 거래처담당자명
     custphone varchar(13),					-- 거래처번호
     custaddress varchar(100)				-- 거래처주소
+    comno int,								-- 회사번호(FK)
+	foreign key (comno) references company(comno)
 );
 
 drop table if exists dept;	
