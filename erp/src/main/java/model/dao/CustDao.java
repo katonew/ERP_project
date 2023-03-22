@@ -1,5 +1,7 @@
 package model.dao;
 
+import java.util.ArrayList;
+
 import model.dto.CustDto;
 
 public class CustDao extends Dao{ 
@@ -24,5 +26,20 @@ public class CustDao extends Dao{
 		return false;
 	}
 	
+	public ArrayList<CustDto> allcust(){
+		ArrayList<CustDto> list = new ArrayList<>();
+		String sql = "select *from cust";
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				CustDto dto = new CustDto(
+						rs.getInt(1), rs.getString(2), rs.getString(3), 
+						rs.getString(4), rs.getString(5), rs.getInt(6));
+				list.add(dto);
+			}
+		} catch (Exception e) {System.out.println("allcust 오류 : "+e);}
+		return list;
+	}
 
 }

@@ -19,7 +19,7 @@
 				
 	</div>
 	
-	<script src="/erp/js/cust.js" type="text/javascript"></script>
+	<script src="/erp/js/cust/cust.js" type="text/javascript"></script>
 	
 </body>
 </html>

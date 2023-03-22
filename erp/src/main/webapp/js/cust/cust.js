@@ -1,5 +1,6 @@
 console.log('cust js 열림')
 
+// 거래처 등록하기
 function newcust(){
 	let cname = document.querySelector('.cname').value
 	let custemp = document.querySelector('.custemp').value
@@ -24,3 +25,4 @@ function newcust(){
 		} // success e
 	}) // ajax e
 } // newcust e
+

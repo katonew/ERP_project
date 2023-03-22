@@ -18,7 +18,7 @@
 	</div>
 	
 	
-	<script src="/erp/js/product.js" type="text/javascript"></script>
+	<script src="/erp/js/product/product.js" type="text/javascript"></script>
 	
 
 </body>
