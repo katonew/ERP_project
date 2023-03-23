@@ -8,7 +8,7 @@ create table company( -- 회사테이블
     comname varchar(20), 					-- 회사명
     cloginno int							-- 회사 로그인 번호
 );
-insert into company(comname,cloingno) values ('확인용회사',12345);
+insert into company(comname,cloginno) values ('확인용회사',12345);
 
 drop table if exists cust;	
 create table cust( -- 거래처테이블	
@@ -16,7 +16,7 @@ create table cust( -- 거래처테이블
     cname varchar(20) not null unique,		-- 거래처명
     custemp varchar(20), 					-- 거래처담당자명
     custphone varchar(13),					-- 거래처번호
-    custaddress varchar(100)				-- 거래처주소
+    custaddress varchar(100),				-- 거래처주소
     comno int,								-- 회사번호(FK)
 	foreign key (comno) references company(comno)
 );
