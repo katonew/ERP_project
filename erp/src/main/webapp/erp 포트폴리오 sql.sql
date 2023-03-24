@@ -20,6 +20,11 @@ create table cust( -- 거래처테이블
     comno int,
     foreign key (comno) references company(comno) on delete set null    
 );
+insert into cust(cname,custemp,custphone,custaddress,comno) values ('거래처1','거래처담당자1','010-1111-2222','경기도 안산시',1);
+insert into cust(cname,custemp,custphone,custaddress,comno) values ('거래처2','거래처담당자2','010-3333-2222','경기도 안산시',1);
+insert into cust(cname,custemp,custphone,custaddress,comno) values ('거래처3','거래처담당자3','010-4444-2222','경기도 안산시',1);
+insert into cust(cname,custemp,custphone,custaddress,comno) values ('거래처4','거래처담당자4','010-5555-2222','경기도 안산시',1);
+insert into cust(cname,custemp,custphone,custaddress,comno) values ('거래처5','거래처담당자5','010-6666-2222','경기도 안산시',1);
 
 drop table if exists dept;	
 create table dept( -- 부서테이블	
@@ -64,11 +69,18 @@ create table product( -- 상품테이블
 	foreign key (comno) references company(comno)
 );
 
+insert into product(pname,pprice,comno) values ('상품1',1000,1);
+insert into product(pname,pprice,comno) values ('상품2',2000,1);
+insert into product(pname,pprice,comno) values ('상품3',3000,1);
+insert into product(pname,pprice,comno) values ('상품4',4000,1);
+insert into product(pname,pprice,comno) values ('상품5',5000,1);
+
 drop table if exists request;
 create table request( -- 발주테이블
 	rno int auto_increment primary key,					-- 발주번호
-	enter_date date,								-- 등록일자	
-	delivery_date date,								-- 납기일자	
+	enter_date date,									-- 등록일자	
+	delivery_date date,									-- 납기일자
+    quantity int,										-- 발주수량
 	empno int,											-- 거래담당자(FK)
 	pno int,											-- 상품번호(FK)
 	custno int,											-- 거래처번호(FK)    

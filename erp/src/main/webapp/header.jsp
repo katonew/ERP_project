@@ -17,6 +17,7 @@
 		<a href="/erp/product/newproduct.jsp">상품 등록 페이지</a>
 		<a href="/erp/product/allproduct.jsp">상품 확인 페이지</a>
 		<a href="/erp/request/newrequest.jsp">발주 등록 페이지</a>
+		<a href="/erp/request/allrequest.jsp">발주 목록 페이지</a>
 	</div>
 	
 	<!-- jquery -->

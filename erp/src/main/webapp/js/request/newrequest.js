@@ -34,13 +34,15 @@ function newrequest(){
 	let custno = document.querySelector('.cust').value
 	let pno = document.querySelector('.product').value
 	let enter_date = document.querySelector('.enter_date').value
+	let quantity = document.querySelector('.quantity').value
 	$.ajax({
 		url : "/erp/request",
 		method : "post",
 		data : {
 			"custno" : custno ,
 			"pno" : pno,
-			"enter_date" : enter_date
+			"enter_date" : enter_date,
+			"quantity" : quantity
 		},
 		success : (r)=>{
 			console.log(r)
