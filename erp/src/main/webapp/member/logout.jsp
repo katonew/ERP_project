@@ -7,10 +7,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file = "/header.jsp" %>
-	<div class="container">
-		<h3>인덱스</h3>
-	</div>
+
+	<%
+		session.removeAttribute("empno");
+		session.removeAttribute("comno");
+	%>
+	<script type="text/javascript">
+		location.href="/erp/index.jsp";
+	</script>
+	
+	
+	
 
 </body>
 </html>
