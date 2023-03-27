@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import model.dao.CompanyDao;
 import model.dao.MemberDao;
 import model.dto.emp.EmpDto;
 
@@ -53,11 +54,12 @@ public class Login extends HttpServlet {
 		String emppwd = request.getParameter("emppwd");
 		System.out.println("emppwd : " +emppwd);
 		int empno = MemberDao.getInstance().getEmpno(empid);
+		int comno = CompanyDao.getInstance().getcomno(cloginno);
 		System.out.println("empno : " +empno);
 		// 2. DAO 호출해서 요청데이터를 보내서 결과 얻기 
 		boolean result = MemberDao.getInstance().login(cloginno, empid, emppwd);
 		if( result == true ) { // 만약에 로그인 성공했으면 
-			request.getSession().setAttribute( "comno", 1 );
+			request.getSession().setAttribute( "comno", comno );
 			request.getSession().setAttribute( "empno", empno );
 		}
 		// 3. Dao 받은 결과를 AJAX에게 전달 

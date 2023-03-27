@@ -23,7 +23,6 @@
 			<a class="list-group-item" href="/erp/cust/newcust.jsp">거래처 등록 페이지</a>
 			<a class="list-group-item" href="/erp/product/newproduct.jsp">상품 등록 페이지</a>
 			<a class="list-group-item" href="/erp/request/newrequest.jsp">발주 등록 페이지</a>
-			<a class="list-group-item" href="/erp/member/login.jsp">로그인</a>
 		</ul>
 		<div class="submenu"></div>
 	</div>

@@ -59,4 +59,5 @@ public class MemberDao extends Dao{
 		}
 		return 0;
 	} // getEmpInfo e
+	
 }
