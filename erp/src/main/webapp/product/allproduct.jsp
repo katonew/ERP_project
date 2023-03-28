@@ -12,6 +12,7 @@
 	<div class="container">
 		<h3>상품 목록</h3>
 		<table class="table ptable"></table>
+		<a href="/erp/product/newproduct.jsp"><button>상품 등록</button></a>
 	</div>
 	
 	<script src="/erp/js/product/allproduct.js" type="text/javascript"></script>

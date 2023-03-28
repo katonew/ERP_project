@@ -1,5 +1,4 @@
 console.log('header js 열림')
-
 let empinfo = null;
 
 getLogininfo();
@@ -13,11 +12,16 @@ function getLogininfo(){
 		data : {"empno" : empno},
 		success : (r) => {
 			console.log('통신성공');
-			console.log( r );	// Dto1개회원 --> r객체1개 회원
-			memberinfo = r;	// 응답 결과를 전역변수로 옮기리 [다름 함수에서 쓰기 위해]
+			memberinfo = {
+				empid : r.empid,
+				empno : r.empno,
+				erank : r.erank,
+				mobile : r.mobile,
+				officephone : r.officephone,
+				comno : r.comno
+			};	// 응답 결과를 전역변수로 옮기리 [다름 함수에서 쓰기 위해]
 			let html = '';	// 1. html 구성 
-			if( r.empid == null ){	// 2. 로그인 안했으면 
-				html += `<a href="#">회원가입</a>`;
+			if( r.empid == null ){	// 2. 로그인 안했으면
 				html += `<a href="/erp/member/login.jsp">로그인</a>`;
 				
 			}else{	// 3.로그인 했으면

@@ -11,6 +11,7 @@
 	<div class="container">
 		<h3>거래처 목록</h3>
 		<table class="table custtable"></table>
+		<a href="/erp/cust/newcust.jsp"><button>거래처 등록</button></a>
 	</div>
 	
 	<script src="/erp/js/cust/allcust.js" type="text/javascript"></script>

@@ -1,4 +1,11 @@
 
+
+console.log(memberinfo)
+if(memberinfo.empid==null){
+	alert('로그인 후 사용가능합니다.')
+	location.href="/erp/member/login.jsp"
+}
+
 allcust()
 // 모든 거래처 가져오기
 function allcust(){

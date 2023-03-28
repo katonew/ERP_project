@@ -11,10 +11,10 @@
 	<%@ include file="/header.jsp" %>
 	<div class="container">
 		<ul class="list-group">
-			<a class="list-group-item" href="/erp/cust/allcust.jsp">거래처 확인 페이지</a>
-			<a class="list-group-item" href="/erp/product/allproduct.jsp">상품 확인 페이지</a>
-			<a class="list-group-item" href="/erp/request/allrequest.jsp">발주 목록 페이지</a>
+			<li><a class="list-group-item" href="/erp/admin/newMember.jsp">사원 등록 페이지</a></li>
 		</ul>
+		
+		
 	</div>
 	
 
