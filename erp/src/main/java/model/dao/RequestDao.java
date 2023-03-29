@@ -10,6 +10,7 @@ public class RequestDao extends Dao{
 	private RequestDao() {}
 	public static RequestDao getInstance() { return dao; }
 	
+	// 발주 등록 함수
 	public boolean newrequest(RequestDto dto) {
 		String sql = "insert into request(enter_date,empno,pno,quantity,custno,comno) values (?,?,?,?,?,?)";
 		try {
@@ -26,21 +27,72 @@ public class RequestDao extends Dao{
 		} catch (Exception e) {System.out.println("newrequest 오류 : "+e);}
 		return false;
 	}
-	
-	public ArrayList<RequestDto> allproduct(){
+	// 모든 발주 가져오기
+	public ArrayList<RequestDto> allrequest(){
 		ArrayList<RequestDto> list = new ArrayList<>();
-		String sql = "select r.*,e.ename,c.cname, p.pname  from request r, emp e, cust c,product p where r.custno=c.custno and r.pno=p.pno;";
+		String sql = "select r.*,e.ename,p.pname,c.cname  from request r join cust c on r.custno=c.custno join product p on r.pno=p.pno join emp e on r.empno = e.empno";
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				//int rno, String enter_date, String delivery_date, int quantity, String empname, String pname
-				RequestDto dto = new RequestDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), 
-						rs.getString(9), rs.getString(10),rs.getString(11));
+				//rno, enter_date,  delivery_date, quantity, empname, cname,  pname
+				RequestDto dto = new RequestDto(rs.getInt(1), rs.getString(2), rs.getString(3), 
+						rs.getInt(4), rs.getString(9), rs.getString(11), rs.getString(10));
+				System.out.println("dto : " + dto);
 				list.add(dto);
 			}
 		} catch (Exception e) {System.out.println("allproduct 오류 : "+e);}
 		return list;
+	}
+	
+	// 발주 삭제 함수
+	public boolean requestDelete(int rno) {
+		System.out.println("rno :" + rno);
+		String sql = "delete from request where rno = " + rno ;
+		try {
+			ps = con.prepareStatement(sql);
+			int count = ps.executeUpdate();
+			if(count==1) {return true;}
+		} catch (Exception e) {System.out.println("requestDelete 오류 : "+e);}
+		return false;
+	}
+	
+	// 발주번호로 발주 정보 가져오기
+	public ArrayList<RequestDto> getRequest(int rno){
+		ArrayList<RequestDto> list = new ArrayList<>();
+		String sql = "select r.*,e.ename,p.pname,c.cname  from request r "
+				+ "join cust c on r.custno=c.custno "
+				+ "join product p on r.pno=p.pno "
+				+ "join emp e on r.empno = e.empno "
+				+ "where r.rno = ? ;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, rno);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				//rno, enter_date,  delivery_date, quantity, empname, cname,  pname
+				RequestDto dto = new RequestDto(rs.getInt(1), rs.getString(2), rs.getString(3), 
+						rs.getInt(4), rs.getString(9), rs.getString(11),rs.getString(10));
+				System.out.println("dto :" + dto);
+				list.add(dto);
+			}
+		} catch (Exception e) {System.out.println("getRequest 오류 : "+e);}
+		return list;
+	}
+	
+	// 발주 수정
+	public boolean requestUpdate(int rno,int custno, int pno, int quantity) {
+		String sql = "update request set custno=?, pno = ?, quantity = ? where rno = ? " ;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, custno);
+			ps.setInt(2, pno);
+			ps.setInt(3, quantity);
+			ps.setInt(4, rno);
+			int count = ps.executeUpdate();
+			if(count==1) {return true;}
+		} catch (Exception e) {System.out.println("requestUpdate 오류 : "+e);}
+		return false;
 	}
 	
 

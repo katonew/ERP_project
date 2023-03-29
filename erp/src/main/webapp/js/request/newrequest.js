@@ -1,3 +1,6 @@
+console.log(empinfo)
+
+
 print()
 function print(){
 	// 거래처 모두 가져와서 출력하기
@@ -26,8 +29,7 @@ function print(){
 			document.querySelector('.product').innerHTML = html;
 		} // success e
 	}) // ajax e
-	
-	
+	document.querySelector('.custemp').innerHTML = empinfo.ename
 }
 function newrequest(){
 	
@@ -42,7 +44,9 @@ function newrequest(){
 			"custno" : custno ,
 			"pno" : pno,
 			"enter_date" : enter_date,
-			"quantity" : quantity
+			"quantity" : quantity,
+			"empno" : empinfo.empno,
+			"comno" : empinfo.comno
 		},
 		success : (r)=>{
 			console.log(r)

@@ -35,6 +35,7 @@ public class RequestDto {
 		this.cname = cname;
 	}
 
+	
 
 	// 등록용 생성자
 	public RequestDto(String enter_date, int empno, int pno, int quantity, int custno, int comno) {
@@ -49,7 +50,8 @@ public class RequestDto {
 	
 	// 출력용 생성자
 	
-	public RequestDto(int rno, String enter_date, String delivery_date, int quantity, String empname,String cname, String pname) {
+	public RequestDto(int rno, String enter_date, String delivery_date, 
+			int quantity, String empname,String cname, String pname) {
 		super();
 		this.rno = rno;
 		this.enter_date = enter_date;
@@ -148,11 +150,15 @@ public class RequestDto {
 		this.comno = comno;
 	}
 
+
 	@Override
 	public String toString() {
-		return "RequestDto [rno=" + rno + ", enter_date=" + enter_date + ", delivery_date=" + delivery_date + ", empno="
-				+ empno + ", pno=" + pno + ", custno=" + custno + ", comno=" + comno + "]";
+		return "RequestDto [rno=" + rno + ", enter_date=" + enter_date + ", delivery_date=" + delivery_date
+				+ ", quantity=" + quantity + ", empno=" + empno + ", pno=" + pno + ", custno=" + custno + ", comno="
+				+ comno + ", empname=" + empname + ", pname=" + pname + ", cname=" + cname + "]";
 	}
+
+	
 	
 	
 

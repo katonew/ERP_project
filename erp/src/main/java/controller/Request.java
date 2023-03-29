@@ -30,8 +30,16 @@ public class Request extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<RequestDto> result = RequestDao.getInstance().allproduct();
+		
+		String type = (String)request.getParameter("type");
 		ObjectMapper mapper = new ObjectMapper();
+		ArrayList<RequestDto> result = new ArrayList<>();
+		if(type.equals("1")) {
+			result = RequestDao.getInstance().allrequest();
+		}else if(type.equals("2")) {
+			int rno = Integer.parseInt(request.getParameter("rno"));
+			result = RequestDao.getInstance().getRequest(rno);
+		}
 		String json = mapper.writeValueAsString(result);
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
@@ -45,19 +53,31 @@ public class Request extends HttpServlet {
 		int custno = Integer.parseInt(request.getParameter("custno"));
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
-		RequestDto dto = new RequestDto(enter_date, 1, pno, quantity, custno, 1);
+		int empno = Integer.parseInt(request.getParameter("empno"));
+		int comno = Integer.parseInt(request.getParameter("comno"));
+		RequestDto dto = new RequestDto(enter_date, empno, pno, quantity, custno, comno);
 		boolean result = RequestDao.getInstance().newrequest(dto);
 		response.getWriter().print(result);
 	}
 
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
+		int rno = Integer.parseInt(request.getParameter("rno"));
+		int custno = Integer.parseInt(request.getParameter("custno"));
+		int pno = Integer.parseInt(request.getParameter("pno"));
+		int quantity = Integer.parseInt(request.getParameter("quantity"));
+		boolean result = RequestDao.getInstance().requestUpdate(rno,custno,pno,quantity);
+		response.getWriter().print(result);
 	}
 
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
+		System.out.println("가져온 rno : " + request.getParameter("rno"));
+		int rno = Integer.parseInt(request.getParameter("rno"));
+		boolean result = RequestDao.getInstance().requestDelete(rno);
+		response.getWriter().print(result);
 	}
 
 }

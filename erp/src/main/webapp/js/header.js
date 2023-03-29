@@ -11,9 +11,11 @@ function getLogininfo(){
 		async : false,
 		data : {"empno" : empno},
 		success : (r) => {
+			console.log(r)
 			console.log('통신성공');
-			memberinfo = {
+			empinfo = {
 				empid : r.empid,
+				ename : r.ename,
 				empno : r.empno,
 				erank : r.erank,
 				mobile : r.mobile,
