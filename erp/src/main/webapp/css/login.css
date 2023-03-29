@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.loginbox{
+	width : 20%;
+	margin: 0 auto;
+}
+
+.loginbox input{
+	margin : 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px dotted #eeeeee;
+}
+
+.loginbtn{
+	width : 100%;
+}

@@ -27,8 +27,8 @@ function getLogininfo(){
 			}else{	// 3.로그인 했으면
 			
 				html +=`
-					로그인한 아이디 : ${r.empid}
-					<a class="dropdown-item" href="/erp/member/logout.jsp"> 로그아웃 </a>
+					<div>로그인한 아이디 : ${r.empid}</div>
+					<div><a class="dropdown-item" href="/erp/member/logout.jsp"> 로그아웃 </a></div>
 				`
 				
 				if( r.empid == 'admin'){ // 관리자이면 
