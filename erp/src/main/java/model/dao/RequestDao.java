@@ -30,14 +30,14 @@ public class RequestDao extends Dao{
 	// 모든 발주 가져오기
 	public ArrayList<RequestDto> allrequest(){
 		ArrayList<RequestDto> list = new ArrayList<>();
-		String sql = "select r.*,e.ename,p.pname,c.cname  from request r join cust c on r.custno=c.custno join product p on r.pno=p.pno join emp e on r.empno = e.empno";
+		String sql = "select r.*,e.ename,c.cname,p.pname,p.pprice from request r join cust c on r.custno=c.custno join product p on r.pno=p.pno join emp e on r.empno = e.empno";
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				//rno, enter_date,  delivery_date, quantity, empname, cname,  pname
 				RequestDto dto = new RequestDto(rs.getInt(1), rs.getString(2), rs.getString(3), 
-						rs.getInt(4), rs.getString(9), rs.getString(11), rs.getString(10));
+						rs.getInt(4), rs.getString(9), rs.getString(10), rs.getString(11),rs.getInt(12));
 				System.out.println("dto : " + dto);
 				list.add(dto);
 			}
@@ -60,7 +60,7 @@ public class RequestDao extends Dao{
 	// 발주번호로 발주 정보 가져오기
 	public ArrayList<RequestDto> getRequest(int rno){
 		ArrayList<RequestDto> list = new ArrayList<>();
-		String sql = "select r.*,e.ename,p.pname,c.cname  from request r "
+		String sql = "select r.*,e.ename,c.cname,p.pname,p.pprice  from request r "
 				+ "join cust c on r.custno=c.custno "
 				+ "join product p on r.pno=p.pno "
 				+ "join emp e on r.empno = e.empno "
@@ -72,7 +72,7 @@ public class RequestDao extends Dao{
 			while(rs.next()) {
 				//rno, enter_date,  delivery_date, quantity, empname, cname,  pname
 				RequestDto dto = new RequestDto(rs.getInt(1), rs.getString(2), rs.getString(3), 
-						rs.getInt(4), rs.getString(9), rs.getString(11),rs.getString(10));
+						rs.getInt(4), rs.getString(9), rs.getString(10),rs.getString(11),rs.getInt(12));
 				System.out.println("dto :" + dto);
 				list.add(dto);
 			}

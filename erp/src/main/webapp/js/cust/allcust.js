@@ -1,7 +1,7 @@
 
 
-console.log(memberinfo)
-if(memberinfo.empid==null){
+console.log(empinfo)
+if(empinfo.empid==null){
 	alert('로그인 후 사용가능합니다.')
 	location.href="/erp/member/login.jsp"
 }

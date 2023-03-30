@@ -20,6 +20,7 @@ function allrequest(){
 							<th>발주날짜</th>
 							<th>납기날짜</th>
 							<th>상품이름</th>
+							<th>단가</th>
 							<th>수량</th>
 							<th>금액</th>
 							<th>담당자</th>
@@ -31,8 +32,9 @@ function allrequest(){
 							<td>${o.enter_date}</td>
 							<td>${o.delivery_date==null? " " : o.delivery_date}</td>
 							<td>${o.pname}</td>
-							<td>${o.quantity}</td>
-							<td></td>
+							<td>${o.pprice.toLocaleString()}원</td>
+							<td>${o.quantity.toLocaleString()} EA</td>
+							<td>${(o.pprice*o.quantity).toLocaleString()}원</td>
 							<td>${o.empname}</td>
 							<td>
 								<button onclick="updatemodal(${o.rno})" type="button">수정</button>
@@ -45,11 +47,35 @@ function allrequest(){
 	}) // ajax e
 } // newcust e
 
+
+function getRequest(rno){
+	let rinfo = null;
+	$.ajax({
+		url : "/erp/request",
+		method : "get",
+		async : false,
+		data : {"type" : 2, "rno" : rno},
+		success : (r)=>{
+			console.log(r)
+			console.log(r[0])
+			rinfo = r[0]
+		}
+	})
+	return rinfo;
+}
+
+
 // 수정 모달 함수
 function updatemodal(rno){
 	document.querySelector('.modal_wrap').style.display = "block"
 	document.querySelector('.modal_title').innerHTML = '발주 수정'
-	document.querySelector('.modal_content').innerHTML = '수정하시겠습니까?'
+	let rinfo = getRequest(rno);
+	console.log(rinfo)
+	let html = `<div> 발주품목 : ${rinfo.pname} </div>
+				<div> 발주수량 : ${rinfo.quantity} EA </div>
+				수정하시겠습니까?
+				`
+	document.querySelector('.modal_content').innerHTML = html
 	document.querySelector('.modal_btns').innerHTML = 
 	`<button onclick="rupdate(${rno})" type="button">확인</button>
 	<button onclick="closeModal()" class="modal_cencel" type="button">닫기</button>`
@@ -59,7 +85,13 @@ function updatemodal(rno){
 function deletemodal(rno){
 	document.querySelector('.modal_wrap').style.display = "block"
 	document.querySelector('.modal_title').innerHTML = '발주 삭제'
-	document.querySelector('.modal_content').innerHTML = '삭제하시겠습니까?'
+	let rinfo = getRequest(rno);
+	console.log(rinfo)
+	let html = `<div> 발주품목 : ${rinfo.pname} </div>
+				<div> 발주수량 : ${rinfo.quantity} EA </div>
+				삭제하시겠습니까?
+				`
+	document.querySelector('.modal_content').innerHTML = html
 	document.querySelector('.modal_btns').innerHTML = 
 	`<button onclick="rdelete(${rno})" type="button">확인</button>
 	<button onclick="closeModal()" class="modal_cencel" type="button">닫기</button>`

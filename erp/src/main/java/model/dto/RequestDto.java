@@ -13,6 +13,7 @@ public class RequestDto {
 	//
 	private String empname;	// 거래담당자이름
 	private String pname;	// 상품이름
+	private int pprice;		// 상품가격
 	private String cname;	// 거래처 이름
 	
 	public RequestDto() {}
@@ -51,7 +52,7 @@ public class RequestDto {
 	// 출력용 생성자
 	
 	public RequestDto(int rno, String enter_date, String delivery_date, 
-			int quantity, String empname,String cname, String pname) {
+			int quantity, String empname,String cname, String pname,int pprice) {
 		super();
 		this.rno = rno;
 		this.enter_date = enter_date;
@@ -60,7 +61,20 @@ public class RequestDto {
 		this.empname = empname;
 		this.cname = cname;
 		this.pname = pname;
+		this.pprice = pprice;
 	}
+	
+	
+
+	public int getPprice() {
+		return pprice;
+	}
+
+
+	public void setPprice(int pprice) {
+		this.pprice = pprice;
+	}
+
 
 	public int getQuantity() {
 		return quantity;
