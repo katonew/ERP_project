@@ -59,6 +59,18 @@ public class Cust extends HttpServlet {
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8");
+		int custno = Integer.parseInt(request.getParameter("custno"));
+		String cname = request.getParameter("cname");
+		String custemp = request.getParameter("custemp");
+		String custphone = request.getParameter("custphone");
+		String custaddress = request.getParameter("custaddress");
+		
+		CustDto dto = new CustDto(custno, cname, custemp, custphone, custaddress, 1);
+		
+		boolean result = CustDao.getInstance().custupdate(dto);
+		
+		response.getWriter().print(result);
 	}
 
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

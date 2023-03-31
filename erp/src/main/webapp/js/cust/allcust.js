@@ -95,7 +95,7 @@ function closeModal(){
 
 
 function custupdate(custno){
-	
+	location.href = "/erp/cust/custupdate.jsp?custno="+custno
 }
 
 

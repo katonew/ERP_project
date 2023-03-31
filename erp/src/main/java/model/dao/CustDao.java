@@ -57,5 +57,20 @@ public class CustDao extends Dao{
 		} catch (Exception e) {System.out.println("allcust 오류 : "+e);}
 		return list;
 	}
+	
+	public boolean custupdate(CustDto dto) {
+		String sql = "update cust set cname =? , custemp =? ,custphone=?,custaddress=? where custno = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, dto.getCname());
+			ps.setString(2, dto.getCustemp());
+			ps.setString(3, dto.getCustphone());
+			ps.setString(4, dto.getCustaddress());
+			ps.setInt(5, dto.getCustno());
+			int count = ps.executeUpdate();
+			if(count==1) {return true;}
+		} catch (Exception e) {System.out.println("custupdate 오류 : "+e);}
+		return false;
+	}
 
 }
