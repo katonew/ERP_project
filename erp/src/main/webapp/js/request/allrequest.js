@@ -47,7 +47,7 @@ function allrequest(){
 	}) // ajax e
 } // newcust e
 
-
+// 특정 발주 정보 가져오기
 function getRequest(rno){
 	let rinfo = null;
 	$.ajax({

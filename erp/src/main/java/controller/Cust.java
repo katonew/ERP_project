@@ -25,7 +25,15 @@ public class Cust extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<CustDto> result = CustDao.getInstance().allcust();
+		
+		String type = request.getParameter("type");
+		ArrayList<CustDto> result = null;
+		if(type.equals("1")) {
+			result = CustDao.getInstance().allcust();
+		}else if(type.equals("2")) {
+			int custno = Integer.parseInt(request.getParameter("custno"));
+			result = CustDao.getInstance().getcust(custno);
+		}
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(result);
 		response.setCharacterEncoding("UTF-8");
