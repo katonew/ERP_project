@@ -26,7 +26,15 @@ public class Product extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<ProductDto> result = ProductDao.getInstance().allproduct();
+		ArrayList<ProductDto> result = new ArrayList<>();
+		int type = Integer.parseInt(request.getParameter("type"));
+		if(type==1) {
+			result = ProductDao.getInstance().allproduct();
+		}else if(type==2) {
+			int pno = Integer.parseInt(request.getParameter("pno"));
+			result = ProductDao.getInstance().getproduct(pno);
+		}
+		
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(result);
 		response.setCharacterEncoding("UTF-8");
@@ -39,8 +47,9 @@ public class Product extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String pname = request.getParameter("pname");
 		int pprice = Integer.parseInt(request.getParameter("pprice"));
+		int comno = Integer.parseInt((String)request.getSession().getAttribute("comno"));
 		
-		ProductDto dto = new ProductDto(0, pname, pprice, 0);
+		ProductDto dto = new ProductDto(0, pname, pprice, comno);
 		
 		boolean result = ProductDao.getInstance().newproduct(dto);
 		response.getWriter().print(result);
@@ -48,12 +57,21 @@ public class Product extends HttpServlet {
 
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
+		int pno = Integer.parseInt(request.getParameter("pno"));
+		String pname = request.getParameter("pname");
+		int pprice = Integer.parseInt(request.getParameter("pprice"));
+		int comno = Integer.parseInt(String.valueOf(request.getSession().getAttribute("comno"))) ;
+		ProductDto dto = new ProductDto(pno, pname, pprice, comno);
+		boolean result = ProductDao.getInstance().pupdate(dto);
+		response.getWriter().print(result);
 	}
 
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		int pno = Integer.parseInt(request.getParameter("pno"));
+		boolean result = ProductDao.getInstance().deleteProduct(pno);
+		response.getWriter().print(result);
 	}
 
 }

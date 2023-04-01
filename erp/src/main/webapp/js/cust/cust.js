@@ -26,6 +26,24 @@ function newcust(){
 	}) // ajax e
 } // newcust e
 
+if(document.querySelector('.custno').innerHTML!=null){
+	let custno = document.querySelector('.custno').innerHTML
+	$.ajax({
+		url : "/erp/cust",
+		method : "get",
+		data : {"type" : 2, "custno" : custno},
+		success : (r)=>{
+			console.log(r)
+			document.querySelector('.cname').value = r[0].cname
+			document.querySelector('.custemp').value = r[0].custemp
+			document.querySelector('.cname').value = r[0].cname
+			document.querySelector('.custphone').value = r[0].custphone
+			document.querySelector('.custaddress').value = r[0].custaddress
+			
+		} // success e
+	}) // ajax e
+}
+
 
 function custupdate(){
 	let custno = document.querySelector('.custno').innerHTML
@@ -33,6 +51,7 @@ function custupdate(){
 	let custemp = document.querySelector('.custemp').value
 	let custphone = document.querySelector('.custphone').value
 	let custaddress = document.querySelector('.custaddress').value
+	
 	$.ajax({
 		url : "/erp/cust",
 		method : "put",
@@ -52,3 +71,5 @@ function custupdate(){
 		} // success e
 	}) // ajax e
 }
+
+

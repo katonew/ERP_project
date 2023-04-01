@@ -72,5 +72,16 @@ public class CustDao extends Dao{
 		} catch (Exception e) {System.out.println("custupdate 오류 : "+e);}
 		return false;
 	}
+	
+	public boolean deleteCust(int custno) {
+		String sql = "delete from cust where custno = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, custno);
+			int count = ps.executeUpdate();
+			if(count==1) {return true;}
+		} catch (Exception e) {System.out.println("deleteCust 오류 : "+e);}
+		return false;
+	}
 
 }

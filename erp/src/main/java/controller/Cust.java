@@ -65,8 +65,8 @@ public class Cust extends HttpServlet {
 		String custemp = request.getParameter("custemp");
 		String custphone = request.getParameter("custphone");
 		String custaddress = request.getParameter("custaddress");
-		
-		CustDto dto = new CustDto(custno, cname, custemp, custphone, custaddress, 1);
+		int comno = Integer.parseInt((String)request.getSession().getAttribute("comno"));
+		CustDto dto = new CustDto(custno, cname, custemp, custphone, custaddress, comno);
 		
 		boolean result = CustDao.getInstance().custupdate(dto);
 		
@@ -74,7 +74,9 @@ public class Cust extends HttpServlet {
 	}
 
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		int custno = Integer.parseInt(request.getParameter("custno"));
+		boolean result = CustDao.getInstance().deleteCust(custno);
+		response.getWriter().print(result);
 	}
 
 }

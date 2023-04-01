@@ -100,6 +100,19 @@ function custupdate(custno){
 
 
 function custdelete(custno){
+	$.ajax({
+		url : "/erp/cust",
+		method : "delete",
+		data : {"custno" : custno},
+		success : (r)=>{
+			console.log(r)
+			if(r=='true'){
+				closeModal()
+				alert('삭제가 완료되었습니다.')
+				location.href="/erp/cust/allcust.jsp";
+			}
+		}
+	})
 	
 }
 
