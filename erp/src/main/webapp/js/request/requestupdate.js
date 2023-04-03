@@ -24,6 +24,7 @@ function print(){
 	$.ajax({
 		url : "/erp/cust",
 		method : "get",
+		data : {"type" : 1},
 		success : (r)=>{
 			console.log(r)
 			let html = ``;
@@ -42,6 +43,7 @@ function print(){
 	$.ajax({
 		url : "/erp/product",
 		method : "get",
+		data : {"type" : 1},
 		success : (r)=>{
 			console.log(r)
 			let html = ``;

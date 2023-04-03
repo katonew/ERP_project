@@ -1,8 +1,7 @@
 console.log('login js 열림')
 
-if(memberinfo.empid!=null){
-	alert('이미 로그인 되어있습니다.')
-	location.href="/erp/index.jsp"
+if(empinfo.empid!=null){
+	location.href="/erp/request/allrequest.jsp"
 }
 
 function login(){
