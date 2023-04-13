@@ -7,6 +7,7 @@ function print(){
 	$.ajax({
 		url : "/erp/cust",
 		method : "get",
+		data : { "type" : 1},
 		success : (r)=>{
 			console.log(r)
 			let html = ``;
@@ -20,6 +21,7 @@ function print(){
 	$.ajax({
 		url : "/erp/product",
 		method : "get",
+		data : { "type" : 1},
 		success : (r)=>{
 			console.log(r)
 			let html = ``;
@@ -31,29 +33,39 @@ function print(){
 	}) // ajax e
 	document.querySelector('.custemp').innerHTML = empinfo.ename
 }
+
 function newrequest(){
-	
-	let custno = document.querySelector('.cust').value
-	let pno = document.querySelector('.product').value
-	let enter_date = document.querySelector('.enter_date').value
-	let quantity = document.querySelector('.quantity').value
-	$.ajax({
-		url : "/erp/request",
-		method : "post",
-		data : {
-			"custno" : custno ,
-			"pno" : pno,
-			"enter_date" : enter_date,
-			"quantity" : quantity,
-			"empno" : empinfo.empno,
-			"comno" : empinfo.comno
-		},
-		success : (r)=>{
-			console.log(r)
-			if(r=='true'){
-				alert('발주 등록 성공')
-				location.href="/erp/index.jsp";
-			}else{alert('발주 등록 실패')}
-		}
-	})
+  let custno = document.querySelector('.cust').value
+  let enter_date = document.querySelector('.enter_date').value
+  let empno = empinfo.empno
+  let comno = empinfo.comno
+  let products = []
+  let productGroups = document.querySelectorAll('.product-group')
+  for(let i=0; i<productGroups.length; i++){
+    let pno = productGroups[i].querySelector('.product').value
+    let quantity = productGroups[i].querySelector('.quantity').value
+    if(pno && quantity){ // Only add product if both values are present
+      products.push({"pno": pno, "quantity": quantity})
+    }
+  }
+  $.ajax({
+    url : "/erp/request",
+    method : "post",
+    data : {
+      "custno" : custno ,
+      "enter_date" : enter_date,
+      "empno" : empno,
+      "comno" : comno,
+      "products" : products
+    },
+    success : (r)=>{
+      console.log(r)
+      if(r=='true'){
+        alert('발주 등록 성공')
+        location.href="/erp/index.jsp";
+      }else{
+        alert('발주 등록 실패')
+      }
+    }
+  })
 }
