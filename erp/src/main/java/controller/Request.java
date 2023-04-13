@@ -51,13 +51,12 @@ public class Request extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String enter_date = request.getParameter("enter_date");
 		int custno = Integer.parseInt(request.getParameter("custno"));
-		int pno = Integer.parseInt(request.getParameter("pno"));
-		int quantity = Integer.parseInt(request.getParameter("quantity"));
 		int empno = Integer.parseInt(request.getParameter("empno"));
 		int comno = Integer.parseInt(request.getParameter("comno"));
-		RequestDto dto = new RequestDto(enter_date, empno, pno, quantity, custno, comno);
-		boolean result = RequestDao.getInstance().newrequest(dto);
-		response.getWriter().print(result);
+		RequestDto dto = new RequestDto(enter_date, empno, custno, comno);
+		int rno = RequestDao.getInstance().newrequest(dto);
+		
+		//response.getWriter().print("true");
 	}
 
 	

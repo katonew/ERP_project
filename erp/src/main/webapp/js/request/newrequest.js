@@ -28,7 +28,10 @@ function print(){
 			r.forEach((o)=>{
 				html += `<option value=${o.pno}>${o.pname}</option>`
 			})
-			document.querySelector('.product').innerHTML = html;
+			let productSelects = document.querySelectorAll('.product');
+			for(let i=0; i<productSelects.length; i++){
+			  productSelects[i].innerHTML = html;
+			}
 		} // success e
 	}) // ajax e
 	document.querySelector('.custemp').innerHTML = empinfo.ename

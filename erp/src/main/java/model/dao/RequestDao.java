@@ -11,20 +11,26 @@ public class RequestDao extends Dao{
 	public static RequestDao getInstance() { return dao; }
 	
 	// 발주 등록 함수
-	public boolean newrequest(RequestDto dto) {
-		String sql = "insert into request(enter_date,empno,pno,quantity,custno,comno) values (?,?,?,?,?,?)";
+	public int newrequest(RequestDto dto) {
+		String sql = "insert into request(enter_date,empno,custno,comno) values (?,?,?,?)";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, dto.getEnter_date());
 			ps.setInt(2, dto.getEmpno());
 			// 직원 가져와서 담당자 설정 구현 예정
-			ps.setInt(3, dto.getPno());
-			ps.setInt(4, dto.getQuantity());
-			ps.setInt(5, dto.getCustno());
-			ps.setInt(6, dto.getComno());
+			ps.setInt(3, dto.getCustno());
+			ps.setInt(4, dto.getComno());
 			int count = ps.executeUpdate();
-			if(count==1) {return true;}
+			if(count==1) {
+				rs = ps.getGeneratedKeys();
+				return rs.getInt(1);
+			}
 		} catch (Exception e) {System.out.println("newrequest 오류 : "+e);}
+		return 0;
+	}
+	//등록한 발주의 pk값을 가져와 거기에 상품목록 넣기
+	public boolean newrequestinfo() {
+		String sql = "";
 		return false;
 	}
 	// 모든 발주 가져오기
@@ -36,8 +42,7 @@ public class RequestDao extends Dao{
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				//rno, enter_date,  delivery_date, quantity, empname, cname,  pname
-				RequestDto dto = new RequestDto(rs.getInt(1), rs.getString(2), rs.getString(3), 
-						rs.getInt(4), rs.getString(9), rs.getString(10), rs.getString(11),rs.getInt(12));
+				RequestDto dto = new RequestDto();
 				System.out.println("dto : " + dto);
 				list.add(dto);
 			}
@@ -71,8 +76,7 @@ public class RequestDao extends Dao{
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				//rno, enter_date,  delivery_date, quantity, empname, cname,  pname
-				RequestDto dto = new RequestDto(rs.getInt(1), rs.getString(2), rs.getString(3), 
-						rs.getInt(4), rs.getString(9), rs.getString(10),rs.getString(11),rs.getInt(12));
+				RequestDto dto = new RequestDto();
 				System.out.println("dto :" + dto);
 				list.add(dto);
 			}
