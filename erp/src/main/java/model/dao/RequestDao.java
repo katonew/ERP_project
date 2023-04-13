@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.dto.RequestDto;
@@ -11,26 +12,37 @@ public class RequestDao extends Dao{
 	public static RequestDao getInstance() { return dao; }
 	
 	// 발주 등록 함수
-	public int newrequest(RequestDto dto) {
+	public boolean newrequest(RequestDto dto) {
 		String sql = "insert into request(enter_date,empno,custno,comno) values (?,?,?,?)";
 		try {
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, dto.getEnter_date());
 			ps.setInt(2, dto.getEmpno());
 			// 직원 가져와서 담당자 설정 구현 예정
 			ps.setInt(3, dto.getCustno());
 			ps.setInt(4, dto.getComno());
 			int count = ps.executeUpdate();
+			int rno = 0;
 			if(count==1) {
 				rs = ps.getGeneratedKeys();
-				return rs.getInt(1);
+				if (rs.next()) {
+					System.out.println("rs :" + rs);
+			        rno = rs.getInt(1);
+			        System.out.println("rno : " + rno);
+			    }
 			}
+			System.out.println("products : " + dto.getProducts());
+			System.out.println("products.size() : " + dto.getProducts().size());
+			for(int i=0;i<dto.getProducts().size();i++) {
+				sql = "insert into Info_Request(rno,pno,quantity) values (?,?,?)";
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, rno);
+				ps.setInt(2, dto.getProducts().get(i).getPno());
+				ps.setInt(3, dto.getProducts().get(i).getQuantity());
+				count = ps.executeUpdate();
+			}
+			if(count==1) {return true;}
 		} catch (Exception e) {System.out.println("newrequest 오류 : "+e);}
-		return 0;
-	}
-	//등록한 발주의 pk값을 가져와 거기에 상품목록 넣기
-	public boolean newrequestinfo() {
-		String sql = "";
 		return false;
 	}
 	// 모든 발주 가져오기

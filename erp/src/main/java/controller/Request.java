@@ -2,6 +2,10 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +19,7 @@ import model.dao.CustDao;
 import model.dao.ProductDao;
 import model.dao.RequestDao;
 import model.dto.CustDto;
+import model.dto.InfoRequestDto;
 import model.dto.ProductDto;
 import model.dto.RequestDto;
 
@@ -49,15 +54,22 @@ public class Request extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String enter_date = request.getParameter("enter_date");
-		int custno = Integer.parseInt(request.getParameter("custno"));
-		int empno = Integer.parseInt(request.getParameter("empno"));
-		int comno = Integer.parseInt(request.getParameter("comno"));
-		RequestDto dto = new RequestDto(enter_date, empno, custno, comno);
-		request.getParameter("products");
-		int rno = RequestDao.getInstance().newrequest(dto);
 		
-		//response.getWriter().print("true");
+		ObjectMapper mapper = new ObjectMapper();
+	    RequestDto requestDto = mapper.readValue(request.getInputStream(), RequestDto.class);
+	    String enter_date = requestDto.getEnter_date();
+	    System.out.println("enter_date : " + enter_date);
+	    int custno = requestDto.getCustno();
+	    System.out.println("custno : " + custno);
+	    int empno = requestDto.getEmpno();
+	    System.out.println("empno : " + empno);
+	    int comno = requestDto.getComno();
+	    System.out.println("comno : " + comno);
+	    List<InfoRequestDto> products = requestDto.getProducts();
+	    System.out.println("products : " + products);
+	    RequestDto dto = new RequestDto(enter_date, empno, custno, comno, products);
+		boolean result = RequestDao.getInstance().newrequest(dto);
+		response.getWriter().print(result);
 	}
 
 	

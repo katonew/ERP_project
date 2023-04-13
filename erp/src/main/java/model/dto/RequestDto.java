@@ -1,5 +1,7 @@
 package model.dto;
 
+import java.util.List;
+
 public class RequestDto {
 	
 	private int rno ;				// 발주번호
@@ -11,18 +13,22 @@ public class RequestDto {
 	// 추가
 	private String empname;	// 거래담당자이름
 	private String cname;	// 거래처 이름
+	private List<InfoRequestDto> products;
+	
 	
 	public RequestDto() {}
 	
 
 	// 등록용 생성자
-	public RequestDto(String enter_date, int empno, int custno, int comno) {
+	public RequestDto(String enter_date, int empno, int custno, int comno, List<InfoRequestDto> products) {
 		super();
 		this.enter_date = enter_date;
 		this.empno = empno;
 		this.custno = custno;
 		this.comno = comno;
+		this.products = products;
 	}
+
 	
 	// 출력용 생성자
 	
@@ -37,6 +43,19 @@ public class RequestDto {
 	}
 	
 	
+
+	
+
+
+	public List<InfoRequestDto> getProducts() {
+		return products;
+	}
+
+
+	public void setProducts(List<InfoRequestDto> products) {
+		this.products = products;
+	}
+
 
 	public String getEmpname() {
 		return empname;

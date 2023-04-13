@@ -35,6 +35,7 @@ function print(){
 		} // success e
 	}) // ajax e
 	document.querySelector('.custemp').innerHTML = empinfo.ename
+	document.querySelector('.enter_date').value = '2023-04-13'
 }
 
 function newrequest(){
@@ -48,13 +49,23 @@ function newrequest(){
     let pno = productGroups[i].querySelector('.product').value
     let quantity = productGroups[i].querySelector('.quantity').value
     if(pno && quantity){ // Only add product if both values are present
-      products.push({"pno": pno, "quantity": quantity})
+      products.push({ "pno" :pno, "quantity" : quantity})
     }
   }
+  console.log(products)
+  console.log(JSON.stringify({
+      "custno" : custno ,
+      "enter_date" : enter_date,
+      "empno" : empno,
+      "comno" : comno,
+      "products" : products
+    }))
+  $.ajaxSettings.traditional = true
   $.ajax({
     url : "/erp/request",
     method : "post",
-    data :JSON.stringify({
+    contentType : "application/json",
+    data : JSON.stringify({
       "custno" : custno ,
       "enter_date" : enter_date,
       "empno" : empno,

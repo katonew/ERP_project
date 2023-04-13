@@ -86,8 +86,7 @@ create table request( -- 발주테이블
 	custno int,											-- 거래처번호(FK)    
     comno int,											-- 회사번호(FK)
 	foreign key (comno) references company(comno),
-    foreign key (empno) references emp(empno) on delete set null,	
-	foreign key (pno) references product(pno) on delete no action,		-- 제품정보가 삭제되어도 정보는 그대로 남기
+    foreign key (empno) references emp(empno) on delete set null,
 	foreign key (custno) references cust(custno) on delete no action	-- 제품정보가 삭제되어도 정보는 그대로 남기
 );
 
@@ -101,7 +100,8 @@ CREATE TABLE Info_Request (
   FOREIGN KEY (pno) REFERENCES product(pno)
 );
 
-
+select *from request;
+select *from Info_Request;
 
 
 drop table if exists attendance;
