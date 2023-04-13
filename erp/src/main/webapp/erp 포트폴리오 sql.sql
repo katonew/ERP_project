@@ -48,7 +48,7 @@ create table emp( -- 인사테이블
     tenure boolean default true,					-- 재직상태
     empid varchar(20) unique,						-- 아이디
     emppwd varchar(20),								-- 비밀번호
-    enterdate datetime default now(),				-- 입사일
+    enterdate datetime ,							-- 입사일
     outdate datetime default null,					-- 퇴사일
     authority int,									-- 권한정보
     dno int,										-- 부서번호(FK)
@@ -59,6 +59,8 @@ create table emp( -- 인사테이블
 
 insert into emp(ename,erank,officephone,ssnum,address,mobile,empid,emppwd,authority,dno,comno) values
 ('사원명',    '대리',    '031-111-1111',    '950514-1111111',    '경기도',    '010-1111-1111',    'qwert',    'qwert1',    1,    1,    1);
+insert into emp(ename,erank,officephone,ssnum,address,mobile,empid,emppwd,authority,dno,comno) values
+('관리자',    '인사',    '031-111-1111',    '111111-1111111',    '경기도',    '010-1111-1111',    'admin',    'admin1',    4,    1,    1);
 
 drop table if exists product;
 create table product( -- 상품테이블
@@ -80,9 +82,7 @@ create table request( -- 발주테이블
 	rno int auto_increment primary key,					-- 발주번호
 	enter_date date,									-- 등록일자	
 	delivery_date date,									-- 납기일자
-    quantity int,										-- 발주수량
 	empno int,											-- 거래담당자(FK)
-	pno int,											-- 상품번호(FK)
 	custno int,											-- 거래처번호(FK)    
     comno int,											-- 회사번호(FK)
 	foreign key (comno) references company(comno),
@@ -90,6 +90,19 @@ create table request( -- 발주테이블
 	foreign key (pno) references product(pno) on delete no action,		-- 제품정보가 삭제되어도 정보는 그대로 남기
 	foreign key (custno) references cust(custno) on delete no action	-- 제품정보가 삭제되어도 정보는 그대로 남기
 );
+
+DROP TABLE IF EXISTS Info_Request;
+CREATE TABLE Info_Request (
+  ino INT AUTO_INCREMENT PRIMARY KEY,				-- PK
+  rno INT,											-- 발주번호
+  pno INT,											-- 상품번호
+  quantity INT,										-- 발주수량
+  FOREIGN KEY (rno) REFERENCES request(rno),
+  FOREIGN KEY (pno) REFERENCES product(pno)
+);
+
+
+
 
 drop table if exists attendance;
 create table attendance( -- 근무테이블
@@ -136,3 +149,5 @@ SELECT * FROM cust;
 select *from product;
 select *from emp;
 select *from request;
+select *from emp;
+
