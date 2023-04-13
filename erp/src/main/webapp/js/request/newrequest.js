@@ -54,13 +54,13 @@ function newrequest(){
   $.ajax({
     url : "/erp/request",
     method : "post",
-    data : {
+    data :JSON.stringify({
       "custno" : custno ,
       "enter_date" : enter_date,
       "empno" : empno,
       "comno" : comno,
       "products" : products
-    },
+    }),
     success : (r)=>{
       console.log(r)
       if(r=='true'){

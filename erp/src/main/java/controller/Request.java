@@ -54,6 +54,7 @@ public class Request extends HttpServlet {
 		int empno = Integer.parseInt(request.getParameter("empno"));
 		int comno = Integer.parseInt(request.getParameter("comno"));
 		RequestDto dto = new RequestDto(enter_date, empno, custno, comno);
+		request.getParameter("products");
 		int rno = RequestDao.getInstance().newrequest(dto);
 		
 		//response.getWriter().print("true");
