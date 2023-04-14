@@ -15,26 +15,26 @@
 		<div class="product-info">
 		    <div class="product-group">
 		      상품: <select class="product"></select></br>
-		      발주수량: <input class="quantity" type="text"></br>
+		      발주수량: <input class="quantity" type="number"></br>
 		    </div>
 		    <div class="product-group">
 		      상품: <select class="product"></select></br>
-		      발주수량: <input class="quantity" type="text"></br>
+		      발주수량: <input class="quantity" type="number"></br>
 		    </div>
 		    <div class="product-group">
 		      상품: <select class="product"></select></br>
-		      발주수량: <input class="quantity" type="text"></br>
+		      발주수량: <input class="quantity" type="number"></br>
 		    </div>
 		    <div class="product-group">
 		      상품: <select class="product"></select></br>
-		      발주수량: <input class="quantity" type="text"></br>
+		      발주수량: <input class="quantity" type="number"></br>
 		    </div>
 		    <div class="product-group">
 		      상품: <select class="product"></select></br>
-		      발주수량: <input class="quantity" type="text"></br>
+		      발주수량: <input class="quantity" type="number"></br>
 		    </div>
 		</div>
-		등록일자 :	<input class="enter_date" type="text"></br>
+		납기일 :	<input class="delivery_date" type="date"></br>
 		<button onclick="newrequest()" type="button">발주 등록</button>
 				
 	</div>

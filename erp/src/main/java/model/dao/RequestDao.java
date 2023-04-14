@@ -1,8 +1,11 @@
 package model.dao;
 
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
+import model.dto.InfoRequestDto;
 import model.dto.RequestDto;
 
 public class RequestDao extends Dao{
@@ -13,10 +16,10 @@ public class RequestDao extends Dao{
 	
 	// 발주 등록 함수
 	public boolean newrequest(RequestDto dto) {
-		String sql = "insert into request(enter_date,empno,custno,comno) values (?,?,?,?)";
+		String sql = "insert into request(delivery_date,empno,custno,comno) values (?,?,?,?)";
 		try {
 			ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			ps.setString(1, dto.getEnter_date());
+			ps.setString(1, dto.getDelivery_date());
 			ps.setInt(2, dto.getEmpno());
 			// 직원 가져와서 담당자 설정 구현 예정
 			ps.setInt(3, dto.getCustno());
@@ -48,13 +51,27 @@ public class RequestDao extends Dao{
 	// 모든 발주 가져오기
 	public ArrayList<RequestDto> allrequest(){
 		ArrayList<RequestDto> list = new ArrayList<>();
-		String sql = "select r.*,e.ename,c.cname,p.pname,p.pprice from request r join cust c on r.custno=c.custno join product p on r.pno=p.pno join emp e on r.empno = e.empno";
+		String sql = "select r.*,e.ename,c.cname "
+				+ "from request r "
+				+ "join cust c on r.custno=c.custno "
+				+ "join emp e on r.empno = e.empno";
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				//rno, enter_date,  delivery_date, quantity, empname, cname,  pname
-				RequestDto dto = new RequestDto();
+				sql = " select i.*,p.pname,p.pprice from info_request i "
+						+ "join product p on i.pno=p.pno where i.rno = "+rs.getInt(1);
+				ps = con.prepareStatement(sql);
+				ResultSet rs2 = ps.executeQuery();
+				List<InfoRequestDto> plist = new ArrayList<>();
+				while(rs2.next()) {
+					InfoRequestDto idto = new InfoRequestDto(rs2.getInt(1), rs2.getInt(2), 
+							rs2.getInt(3),rs2.getInt(4), rs2.getString(5), rs2.getInt(6));
+					plist.add(idto);
+					System.out.println("idto : " + idto);
+				}
+				RequestDto dto = new RequestDto(rs.getInt(1), rs.getString(2), 
+						rs.getString(3), rs.getString(7), rs.getString(8), plist);
 				System.out.println("dto : " + dto);
 				list.add(dto);
 			}
@@ -77,22 +94,31 @@ public class RequestDao extends Dao{
 	// 발주번호로 발주 정보 가져오기
 	public ArrayList<RequestDto> getRequest(int rno){
 		ArrayList<RequestDto> list = new ArrayList<>();
-		String sql = "select r.*,e.ename,c.cname,p.pname,p.pprice  from request r "
+		String sql = "select r.*,e.ename,c.cname "
+				+ "from request r "
 				+ "join cust c on r.custno=c.custno "
-				+ "join product p on r.pno=p.pno "
-				+ "join emp e on r.empno = e.empno "
-				+ "where r.rno = ? ;";
+				+ "join emp e on r.empno = e.empno where rno =" + rno ;
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, rno);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				//rno, enter_date,  delivery_date, quantity, empname, cname,  pname
-				RequestDto dto = new RequestDto();
-				System.out.println("dto :" + dto);
+				sql = " select i.*,p.pname,p.pprice from info_request i "
+						+ "join product p on i.pno=p.pno where i.rno = "+rno;
+				ps = con.prepareStatement(sql);
+				ResultSet rs2 = ps.executeQuery();
+				List<InfoRequestDto> plist = new ArrayList<>();
+				while(rs2.next()) {
+					InfoRequestDto idto = new InfoRequestDto(rs2.getInt(1), rs2.getInt(2), 
+							rs2.getInt(3),rs2.getInt(4), rs2.getString(5), rs2.getInt(6));
+					plist.add(idto);
+					System.out.println("idto : " + idto);
+				}
+				RequestDto dto = new RequestDto(rs.getInt(1), rs.getString(2), 
+						rs.getString(3), rs.getString(7), rs.getString(8), plist);
+				System.out.println("dto : " + dto);
 				list.add(dto);
 			}
-		} catch (Exception e) {System.out.println("getRequest 오류 : "+e);}
+		} catch (Exception e) {System.out.println("allproduct 오류 : "+e);}
 		return list;
 	}
 	

@@ -35,12 +35,12 @@ function print(){
 		} // success e
 	}) // ajax e
 	document.querySelector('.custemp').innerHTML = empinfo.ename
-	document.querySelector('.enter_date').value = '2023-04-13'
+	document.querySelector('.enter_date').value = '2023-04-14'
 }
 
 function newrequest(){
   let custno = document.querySelector('.cust').value
-  let enter_date = document.querySelector('.enter_date').value
+  let delivery_date = document.querySelector('.delivery_date').value
   let empno = empinfo.empno
   let comno = empinfo.comno
   let products = []
@@ -55,7 +55,7 @@ function newrequest(){
   console.log(products)
   console.log(JSON.stringify({
       "custno" : custno ,
-      "enter_date" : enter_date,
+      "delivery_date" : delivery_date,
       "empno" : empno,
       "comno" : comno,
       "products" : products
@@ -67,7 +67,7 @@ function newrequest(){
     contentType : "application/json",
     data : JSON.stringify({
       "custno" : custno ,
-      "enter_date" : enter_date,
+      "delivery_date" : delivery_date,
       "empno" : empno,
       "comno" : comno,
       "products" : products
@@ -76,7 +76,7 @@ function newrequest(){
       console.log(r)
       if(r=='true'){
         alert('발주 등록 성공')
-        location.href="/erp/index.jsp";
+        location.href="/erp/request/allrequest.jsp";
       }else{
         alert('발주 등록 실패')
       }

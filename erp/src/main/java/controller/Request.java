@@ -57,8 +57,8 @@ public class Request extends HttpServlet {
 		
 		ObjectMapper mapper = new ObjectMapper();
 	    RequestDto requestDto = mapper.readValue(request.getInputStream(), RequestDto.class);
-	    String enter_date = requestDto.getEnter_date();
-	    System.out.println("enter_date : " + enter_date);
+	    String delivery_date = requestDto.getDelivery_date();
+	    System.out.println("enter_date : " + delivery_date);
 	    int custno = requestDto.getCustno();
 	    System.out.println("custno : " + custno);
 	    int empno = requestDto.getEmpno();
@@ -67,7 +67,7 @@ public class Request extends HttpServlet {
 	    System.out.println("comno : " + comno);
 	    List<InfoRequestDto> products = requestDto.getProducts();
 	    System.out.println("products : " + products);
-	    RequestDto dto = new RequestDto(enter_date, empno, custno, comno, products);
+	    RequestDto dto = new RequestDto(delivery_date, empno, custno, comno, products);
 		boolean result = RequestDao.getInstance().newrequest(dto);
 		response.getWriter().print(result);
 	}
