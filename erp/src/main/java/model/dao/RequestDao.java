@@ -71,7 +71,7 @@ public class RequestDao extends Dao{
 					System.out.println("idto : " + idto);
 				}
 				RequestDto dto = new RequestDto(rs.getInt(1), rs.getString(2), 
-						rs.getString(3), rs.getString(7), rs.getString(8), plist);
+						rs.getString(3), rs.getString(7), rs.getString(8), rs.getBoolean(4),plist);
 				System.out.println("dto : " + dto);
 				list.add(dto);
 			}
@@ -114,7 +114,7 @@ public class RequestDao extends Dao{
 					System.out.println("idto : " + idto);
 				}
 				RequestDto dto = new RequestDto(rs.getInt(1), rs.getString(2), 
-						rs.getString(3), rs.getString(7), rs.getString(8), plist);
+						rs.getString(3), rs.getString(7), rs.getString(8),rs.getBoolean(4), plist);
 				System.out.println("dto : " + dto);
 				list.add(dto);
 			}
@@ -134,6 +134,20 @@ public class RequestDao extends Dao{
 			int count = ps.executeUpdate();
 			if(count==1) {return true;}
 		} catch (Exception e) {System.out.println("requestUpdate 오류 : "+e);}
+		return false;
+	}
+	
+	// 발주 상태 변경함수
+	public boolean stateUpdate(int rno, boolean state) {
+		String sql = "update request set state = ? where rno = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setBoolean(1, !state);
+			ps.setInt(2, rno);
+			int count = ps.executeUpdate();
+			if(count==1) {return true;}
+		} catch (Exception e) {System.out.println("stateUpdate 오류 : "+e);}
+				
 		return false;
 	}
 	

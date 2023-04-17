@@ -74,12 +74,19 @@ public class Request extends HttpServlet {
 
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+		String type = (String)request.getParameter("type");
+		boolean result = false;
 		int rno = Integer.parseInt(request.getParameter("rno"));
-		int custno = Integer.parseInt(request.getParameter("custno"));
-		int pno = Integer.parseInt(request.getParameter("pno"));
-		int quantity = Integer.parseInt(request.getParameter("quantity"));
-		boolean result = RequestDao.getInstance().requestUpdate(rno,custno,pno,quantity);
+		if(type.equals("1")) {
+			request.setCharacterEncoding("UTF-8");
+			int custno = Integer.parseInt(request.getParameter("custno"));
+			int pno = Integer.parseInt(request.getParameter("pno"));
+			int quantity = Integer.parseInt(request.getParameter("quantity"));
+			result = RequestDao.getInstance().requestUpdate(rno,custno,pno,quantity);
+		}else if(type.equals("2")) {
+			boolean state = Boolean.parseBoolean(request.getParameter("state"));
+			result = RequestDao.getInstance().stateUpdate(rno,state);
+		}
 		response.getWriter().print(result);
 	}
 

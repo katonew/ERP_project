@@ -80,8 +80,9 @@ insert into product(pname,pprice,comno) values ('상품5',5000,1);
 drop table if exists request;
 create table request( -- 발주테이블
 	rno int auto_increment primary key,					-- 발주번호
-	enter_date date,									-- 등록일자	
+	enter_date date default (current_date),				-- 등록일자	
 	delivery_date date,									-- 납기일자
+    state boolean default true,							-- 납기상태
 	empno int,											-- 거래담당자(FK)
 	custno int,											-- 거래처번호(FK)    
     comno int,											-- 회사번호(FK)
@@ -151,3 +152,5 @@ select *from emp;
 select *from request;
 select *from emp;
 
+select i.*,p.pname,p.pprice from info_request i join product p on i.pno=p.pno where i.rno = 1;
+select r.*,e.ename,c.cname from request r join cust c on r.custno=c.custno join emp e on r.empno = e.empno where rno = 1;

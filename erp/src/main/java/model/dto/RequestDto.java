@@ -7,6 +7,7 @@ public class RequestDto {
 	private int rno ;						// 발주번호
 	private String enter_date ;				// 등록일자
 	private String delivery_date ;			// 납기일자
+	private boolean state;					// 납기상태
 	private int empno ;						// 거래담당자(FK)
 	private int custno ;					// 거래처번호(FK)    
 	private int comno ;						// 회사번호(FK)
@@ -32,7 +33,7 @@ public class RequestDto {
 	
 	// 출력용 생성자 // product는 다른 sql문으로 가져와서 따로 담기 위해
 	public RequestDto(int rno, String enter_date, String delivery_date, 
-			 String empname, String cname,List<InfoRequestDto> products) {
+			 String empname, String cname,boolean state, List<InfoRequestDto> products) {
 		super();
 		this.rno = rno;
 		this.enter_date = enter_date;
@@ -40,6 +41,7 @@ public class RequestDto {
 		this.empname = empname;
 		this.cname = cname;
 		this.products = products;
+		this.state = state;
 	}
 	
 	
@@ -47,7 +49,7 @@ public class RequestDto {
 	
 	// 풀 생성자
 	public RequestDto(int rno, String enter_date, String delivery_date, int empno, int custno, int comno,
-			String empname, String cname, List<InfoRequestDto> products) {
+			String empname, String cname, boolean state, List<InfoRequestDto> products) {
 		super();
 		this.rno = rno;
 		this.enter_date = enter_date;
@@ -57,7 +59,18 @@ public class RequestDto {
 		this.comno = comno;
 		this.empname = empname;
 		this.cname = cname;
+		this.state = state;
 		this.products = products;
+	}
+
+	
+	public boolean isState() {
+		return state;
+	}
+
+
+	public void setState(boolean state) {
+		this.state = state;
 	}
 
 

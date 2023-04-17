@@ -1,4 +1,5 @@
 
+$("#exampleTable").DataTable({ });
 console.log(empinfo)
 
 if(empinfo.empid==null){
@@ -41,13 +42,14 @@ function allrequest(){
 							<td onclick="updatemodal(${o.rno})">${o.products[0].pname} 외 ${o.products.length-1}건 </td>
 							<td>${totalprice.toLocaleString()}원</td>
 							<td>${o.delivery_date==null? " " : o.delivery_date}</td>
-							<td>진행중</td>
+							<td>${o.state?"진행중":"납기완료"}</td>
 							<td>
-								<button type="button">완료</button>
+								<button onclick="onDone(${o.rno},${o.state})" type="button">완료</button>
 							</td>
 						</tr>`
 			})
 			document.querySelector('.requesttable').innerHTML = html;
+			document.querySelector('.example').innerHTML = html;
 		} // success e
 	}) // ajax e
 } // newcust e
@@ -154,4 +156,32 @@ function rdelete(rno){
 		}
 	})
 }
+
+// 납기완료 버튼함수
+function onDone(rno, state){
+	$.ajax({
+		url : "/erp/request",
+		method : "put",
+		data : {
+			"type" : 2,
+			"rno" : rno,
+			"state" : state,
+		},
+		success : (r)=>{
+			console.log(r)
+			if(r=='true'){
+				allrequest()
+			}
+		}
+	})
+}
+
+
+
+
+
+
+
+
+
 
