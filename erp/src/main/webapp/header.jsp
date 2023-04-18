@@ -29,8 +29,6 @@
 				<!-- 내용이 들어가는 자리  -->
 			</div>
 			<div class="modal_btns">
-				<button class="modal_check" 	type="button">확인</button>
-				<button onclick="closeModal()" class="modal_cencel" type="button">닫기</button>
 			</div>
 		</div>
 	</div>

@@ -43,6 +43,10 @@ function getLogininfo(){
 	})
 }
 
+function closeModal(){
+	document.querySelector('.modal_wrap').style.display = "none"
+}
+
 
 
 

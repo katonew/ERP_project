@@ -48,7 +48,6 @@ function allrequest(){
 							</td>
 						</tr>`
 			})
-			document.querySelector('.requesttable').innerHTML = html;
 			document.querySelector('.example').innerHTML = html;
 		} // success e
 	}) // ajax e
@@ -127,10 +126,6 @@ function deletemodal(rno){
 	document.querySelector('.modal_btns').innerHTML = 
 	`<button onclick="rdelete(${rno})" type="button">확인</button>
 	<button onclick="closeModal()" class="modal_cencel" type="button">닫기</button>`
-}
-// 모달 닫기 함수
-function closeModal(){
-	document.querySelector('.modal_wrap').style.display = "none"
 }
 // 수정페이지로 넘어가는 함수
 function rupdate(rno){

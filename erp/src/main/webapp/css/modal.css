@@ -10,6 +10,7 @@
 	justify-content: center; align-items: center;
 	/* 모달 열기/닫기 -> js */
 	display: none;
+	z-index : 999;
 }
 /* 모달 상자 만들기 */
 .modal_box{

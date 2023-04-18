@@ -5,20 +5,6 @@ print()
 function print(){
 	// 거래처 모두 가져와서 출력하기
 	$.ajax({
-		url : "/erp/cust",
-		method : "get",
-		data : { "type" : 1},
-		success : (r)=>{
-			console.log(r)
-			let html = ``;
-			r.forEach((o)=>{
-				html += `<option value=${o.custno}>${o.cname}</option>`
-			})
-			document.querySelector('.cust').innerHTML = html;
-		} // success e
-	}) // ajax e
-	// 상품정보 모두 가져와서 출력하기
-	$.ajax({
 		url : "/erp/product",
 		method : "get",
 		data : { "type" : 1},
@@ -35,7 +21,6 @@ function print(){
 		} // success e
 	}) // ajax e
 	document.querySelector('.custemp').innerHTML = empinfo.ename
-	document.querySelector('.enter_date').value = '2023-04-14'
 }
 
 function newrequest(){
@@ -82,4 +67,59 @@ function newrequest(){
       }
     }
   })
+}
+// 거래처 검색 모달 띄우기
+function custmodal(){
+	document.querySelector('.modal_wrap').style.display = "block"
+	document.querySelector('.modal_title').innerHTML = '거래처 검색';
+	let html = 
+	`<input class="searchCustbox" type="text">
+	<button onclick="searchCust()">검색</button>
+	<div class="custList"></div>`
+	document.querySelector('.modal_content').innerHTML = html
+	searchCust()
+	document.querySelector('.modal_btns').innerHTML = 
+	`<button onclick="closeModal()" class="modal_cencel" type="button">닫기</button>`
+}
+
+// 거래처 검색
+function searchCust(){
+	let search = document.querySelector('.searchCustbox').value;
+	let type = 0;
+	if(search==''){
+		type = 1;
+	}else{
+		type = 3;
+	}
+	console.log(type)
+	$.ajax({
+		url : "/erp/cust",
+		method : "get",
+		data : { "type" : type},
+		success : (r)=>{
+			console.log(r)
+			let html = ``;
+			r.forEach((o)=>{
+				html += `<div onclick="selectcust(${o.custno})" value=${o.custno}>${o.cname}</div>`
+			})
+			document.querySelector('.custList').innerHTML = html;
+		} // success e
+	}) // ajax e
+	// 상품정보 모두 가져와서 출력하기
+}
+// 모달에서 거래처를 선택했을때 
+function selectcust(custno){
+	let custinfo = null;
+	$.ajax({
+		url : "/erp/cust",
+		method : "get",
+		async : false,
+		data : {"type" : 2, "custno" : custno},
+		success : (r)=>{
+			console.log(r)
+			custinfo = r[0]
+		}
+	})
+	document.querySelector('.cust').value = custinfo.cname;
+	closeModal()
 }

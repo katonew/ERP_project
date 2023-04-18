@@ -89,9 +89,7 @@ function deletemodal(custno){
 
 
 // 모달 닫기 함수
-function closeModal(){
-	document.querySelector('.modal_wrap').style.display = "none"
-}
+
 
 
 function custupdate(custno){

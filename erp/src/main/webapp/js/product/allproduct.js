@@ -85,10 +85,6 @@ function deletemodal(pno){
 	<button onclick="closeModal()" class="modal_cencel" type="button">닫기</button>`
 }
 
-function closeModal(){
-	document.querySelector('.modal_wrap').style.display = "none"
-}
-
 function pupdate(pno){
 	location.href = "/erp/product/pupdate.jsp?pno="+pno
 }

@@ -10,30 +10,34 @@
 	<%@ include file = "/header.jsp" %>
 	<div class="container">
 		<h3>발주 등록 페이지</h3>
-		거래처명 : <select class="cust"></select></br>
+		거래처명 : <input onclick="custmodal()" class="cust"></br>
 		담당자명 :	<span class="custemp" type="text"></span></br>
-		<div class="product-info">
-		    <div class="product-group">
-		      상품: <select class="product"></select></br>
-		      발주수량: <input class="quantity" type="number"></br>
-		    </div>
-		    <div class="product-group">
-		      상품: <select class="product"></select></br>
-		      발주수량: <input class="quantity" type="number"></br>
-		    </div>
-		    <div class="product-group">
-		      상품: <select class="product"></select></br>
-		      발주수량: <input class="quantity" type="number"></br>
-		    </div>
-		    <div class="product-group">
-		      상품: <select class="product"></select></br>
-		      발주수량: <input class="quantity" type="number"></br>
-		    </div>
-		    <div class="product-group">
-		      상품: <select class="product"></select></br>
-		      발주수량: <input class="quantity" type="number"></br>
-		    </div>
-		</div>
+		<table class="product-info table table-detail">
+			<tr>
+				<th>상품</th>
+				<th>발주수량</th>
+			</tr>
+		    <tr class="product-group">
+		      <td><select class="product"></select></td>
+		      <td><input class="quantity" type="number"></td>
+		    </tr>
+		    <tr class="product-group">
+		      <td><select class="product"></select></td>
+		      <td><input class="quantity" type="number"></td>
+		    </tr>
+		    <tr class="product-group">
+		      <td><select class="product"></select></td>
+		      <td><input class="quantity" type="number"></td>
+		    </tr>
+		    <tr class="product-group">
+		      <td><select class="product"></select></td>
+		      <td><input class="quantity" type="number"></td>
+		    </tr>
+		    <tr class="product-group">
+		      <td><select class="product"></select></td>
+		      <td><input class="quantity" type="number"></td>
+		    </tr>
+		</table>
 		납기일 :	<input class="delivery_date" type="date"></br>
 		<button onclick="newrequest()" type="button">발주 등록</button>
 				
