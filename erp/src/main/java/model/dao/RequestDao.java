@@ -54,7 +54,7 @@ public class RequestDao extends Dao{
 		String sql = "select r.*,e.ename,c.cname "
 				+ "from request r "
 				+ "join cust c on r.custno=c.custno "
-				+ "join emp e on r.empno = e.empno";
+				+ "join emp e on r.empno = e.empno order by rno desc";
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -71,7 +71,7 @@ public class RequestDao extends Dao{
 					System.out.println("idto : " + idto);
 				}
 				RequestDto dto = new RequestDto(rs.getInt(1), rs.getString(2), 
-						rs.getString(3), rs.getString(7), rs.getString(8), rs.getBoolean(4),plist);
+						rs.getString(3), rs.getString(8), rs.getString(9), rs.getBoolean(4),plist);
 				System.out.println("dto : " + dto);
 				list.add(dto);
 			}
@@ -114,7 +114,7 @@ public class RequestDao extends Dao{
 					System.out.println("idto : " + idto);
 				}
 				RequestDto dto = new RequestDto(rs.getInt(1), rs.getString(2), 
-						rs.getString(3), rs.getString(7), rs.getString(8),rs.getBoolean(4), plist);
+						rs.getString(3), rs.getString(8), rs.getString(9),rs.getBoolean(4), plist);
 				System.out.println("dto : " + dto);
 				list.add(dto);
 			}

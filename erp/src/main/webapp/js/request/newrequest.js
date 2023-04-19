@@ -1,37 +1,31 @@
 console.log(empinfo)
 
-
 print()
 function print(){
-	// 거래처 모두 가져와서 출력하기
-	$.ajax({
-		url : "/erp/product",
-		method : "get",
-		data : { "type" : 1},
-		success : (r)=>{
-			console.log(r)
-			let html = ``;
-			r.forEach((o)=>{
-				html += `<option value=${o.pno}>${o.pname}</option>`
-			})
-			let productSelects = document.querySelectorAll('.product');
-			for(let i=0; i<productSelects.length; i++){
-			  productSelects[i].innerHTML = html;
-			}
-		} // success e
-	}) // ajax e
 	document.querySelector('.custemp').innerHTML = empinfo.ename
+	let html = ``
+	for(let i=0; i<5;i++){
+		html += `<tr class="product-group">
+		      <td>
+		        <input class="product" ondblclick="productmodal(${i})">
+		      </td>
+		      <td><input class="quantity" onchange="gettotalPrice(${i})" type="number"></td>
+		      <td><input class="pprice" type="number"></td>
+		      <td><input class="totalPrice" type="number"></td>
+		    </tr>`
+	}
+	document.querySelector('.product-info').innerHTML += html;
 }
-
+// 발주 등록 함수
 function newrequest(){
-  let custno = document.querySelector('.cust').value
+  let custno = document.querySelector('.cust').dataset.custno;
   let delivery_date = document.querySelector('.delivery_date').value
   let empno = empinfo.empno
   let comno = empinfo.comno
   let products = []
   let productGroups = document.querySelectorAll('.product-group')
   for(let i=0; i<productGroups.length; i++){
-    let pno = productGroups[i].querySelector('.product').value
+    let pno = productGroups[i].querySelector('.product').dataset.pno
     let quantity = productGroups[i].querySelector('.quantity').value
     if(pno && quantity){ // Only add product if both values are present
       products.push({ "pno" :pno, "quantity" : quantity})
@@ -105,7 +99,6 @@ function searchCust(){
 			document.querySelector('.custList').innerHTML = html;
 		} // success e
 	}) // ajax e
-	// 상품정보 모두 가져와서 출력하기
 }
 // 모달에서 거래처를 선택했을때 
 function selectcust(custno){
@@ -121,5 +114,73 @@ function selectcust(custno){
 		}
 	})
 	document.querySelector('.cust').value = custinfo.cname;
+	document.querySelector('.cust').dataset.custno = custno;
 	closeModal()
+}
+// 상품 선택 모달
+function productmodal(listno) {
+	console.log(listno)
+	document.querySelector('.modal_wrap').style.display = "block"
+	document.querySelector('.modal_title').innerHTML = '상품 검색';
+	let html = 
+	`<input class="searchProductbox" type="text">
+	<button onclick="searchProduct(${listno})">검색</button>
+	<div class="productList"></div>`
+	document.querySelector('.modal_content').innerHTML = html;
+	searchProduct(listno);
+	document.querySelector('.modal_btns').innerHTML = 
+	`<button onclick="closeModal()" class="modal_cencel" type="button">닫기</button>`
+}
+
+// 상품 모달에서 검색버튼 눌렀을때
+function searchProduct(listno){
+	console.log(listno)
+	let search = document.querySelector('.searchProductbox').value;
+	let type = 0;
+	if(search==''){
+		type = 1;
+	}else{
+		type = 3;
+	}
+	console.log(type)
+	$.ajax({
+		url : "/erp/product",
+		method : "get",
+		data : { "type" : type},
+		success : (r)=>{
+			console.log(r)
+			let html = ``;
+			r.forEach((o)=>{
+				html += `<div onclick="selectproduct(${o.pno},${listno})" value=${o.pno}>${o.pname}</div>`
+			})
+			document.querySelector('.productList').innerHTML = html;
+		} // success e
+	}) // ajax e
+}
+
+// 모달에서 상품을 선택했을때
+function selectproduct(pno,listno){
+	console.log(listno)
+	let productInfo = null;
+	$.ajax({
+		url : "/erp/product",
+		method : "get",
+		async : false,
+		data : {"type" : 2, "pno" : pno},
+		success : (r)=>{
+			console.log(r)
+			productInfo = r[0]
+		}
+	})
+	document.querySelectorAll('.product')[listno].value = productInfo.pname;
+	document.querySelectorAll('.product')[listno].dataset.pno = pno;
+	document.querySelectorAll('.pprice')[listno].value = productInfo.pprice;
+	closeModal()
+}
+
+function gettotalPrice(listno){
+	let pprice = document.querySelectorAll('.pprice')[listno].value
+	let quantity = document.querySelectorAll('.quantity')[listno].value
+	let totalprice = pprice * quantity
+	document.querySelectorAll('.totalPrice')[listno].value = totalprice;
 }
