@@ -75,5 +75,23 @@ public class ProductDao extends Dao{
 		} catch (Exception e) {System.out.println("pupdate 오류 : "+e);}
 		return false;
 	}
+	public ArrayList<ProductDto> searchproduct(String search){
+		ArrayList<ProductDto> result = new ArrayList<>();
+		String sql = "select *from product where pname like  ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, "%"+search+"%");
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				ProductDto dto = new ProductDto(rs.getInt(1), rs.getString(2), 
+						rs.getInt(3), rs.getInt(4));
+				result.add(dto);
+			}
+		} catch (Exception e) {
+			System.out.println("searchproduct 오류 : "+e);
+		}
+		return result;
+	}
+	
 
 }

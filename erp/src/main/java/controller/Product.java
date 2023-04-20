@@ -33,8 +33,10 @@ public class Product extends HttpServlet {
 		}else if(type==2) {
 			int pno = Integer.parseInt(request.getParameter("pno"));
 			result = ProductDao.getInstance().getproduct(pno);
+		}else if(type==3) {
+			String search = request.getParameter("search");
+			result = ProductDao.getInstance().searchproduct(search);
 		}
-		
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(result);
 		response.setCharacterEncoding("UTF-8");

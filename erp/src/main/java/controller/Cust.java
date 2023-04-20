@@ -33,6 +33,9 @@ public class Cust extends HttpServlet {
 		}else if(type.equals("2")) {
 			int custno = Integer.parseInt(request.getParameter("custno"));
 			result = CustDao.getInstance().getcust(custno);
+		}else if(type.equals("3")) {
+			String search = request.getParameter("search");
+			result = CustDao.getInstance().searchcust(search);
 		}
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(result);
@@ -65,7 +68,7 @@ public class Cust extends HttpServlet {
 		String custemp = request.getParameter("custemp");
 		String custphone = request.getParameter("custphone");
 		String custaddress = request.getParameter("custaddress");
-		int comno = Integer.parseInt((String)request.getSession().getAttribute("comno"));
+		int comno = Integer.parseInt(String.valueOf(request.getSession().getAttribute("comno")));
 		CustDto dto = new CustDto(custno, cname, custemp, custphone, custaddress, comno);
 		
 		boolean result = CustDao.getInstance().custupdate(dto);

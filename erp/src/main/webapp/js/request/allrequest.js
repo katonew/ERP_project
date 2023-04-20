@@ -89,11 +89,11 @@ function updatemodal(rno){
 	let totalprice = 0;
 	rinfo.products.forEach((o)=>{
 		html += 
-		`<tr> 
-			<td>${o.pname}</td>
-			<td>${o.quantity}</td>
-			<td>${o.pprice.toLocaleString()}</td>
-			<td>${(o.pprice*o.quantity).toLocaleString()}</td>
+		`<tr class="product-group"> 
+			<td><input class="product" value="${o.pname}" readonly></td>
+			<td><input class="quantity" value="${o.quantity}" onchange="gettotalPrice(${o})"></td>
+			<td><input class="pprice" value="${o.pprice.toLocaleString()}" readonly></td>
+			<td><input class="totalPrice" value="${(o.pprice*o.quantity).toLocaleString()}" readonly></td>
 		</tr>`
 		totalprice += o.pprice*o.quantity
 	})
@@ -127,9 +127,28 @@ function deletemodal(rno){
 	`<button onclick="rdelete(${rno})" type="button">확인</button>
 	<button onclick="closeModal()" class="modal_cencel" type="button">닫기</button>`
 }
-// 수정페이지로 넘어가는 함수
+// 수정함수
 function rupdate(rno){
-	location.href="/erp/request/requestupdate.jsp?rno="+rno;
+	let custno = document.querySelector('.cust').value
+	let pno = document.querySelector('.product').value
+	let quantity = document.querySelector('.quantity').value
+	$.ajax({
+		url : "/erp/request",
+		method : "put",
+		data : { 
+			"rno" : rno,
+			"custno" : custno ,
+			"pno" : pno,
+			"quantity" : quantity
+		},
+		success : (r)=>{
+			console.log(r)
+			if(r=='true'){
+				alert('수정성공')
+				location.href="/erp/request/allrequest.jsp"
+			}
+		}
+	})
 }
 
 // 삭제 함수
@@ -172,6 +191,12 @@ function onDone(rno, state){
 }
 
 
+function gettotalPrice(listno){
+	let pprice = (document.querySelectorAll('.pprice')[listno].value)*1
+	let quantity = document.querySelectorAll('.quantity')[listno].value
+	let totalprice = pprice * quantity
+	document.querySelectorAll('.totalPrice')[listno].value = totalprice.toLocaleString();
+}
 
 
 

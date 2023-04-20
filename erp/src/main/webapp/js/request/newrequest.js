@@ -1,5 +1,10 @@
 console.log(empinfo)
 
+if(empinfo.empid==null){
+	alert('로그인 후 사용가능합니다.')
+	location.href="/erp/member/login.jsp"
+}
+
 print()
 function print(){
 	document.querySelector('.custemp').innerHTML = empinfo.ename
@@ -10,8 +15,8 @@ function print(){
 		        <input class="product" ondblclick="productmodal(${i})">
 		      </td>
 		      <td><input class="quantity" onchange="gettotalPrice(${i})" type="number"></td>
-		      <td><input class="pprice" type="number"></td>
-		      <td><input class="totalPrice" type="number"></td>
+		      <td><input class="pprice" readonly></td>
+		      <td><input class="totalPrice" readonly></td>
 		    </tr>`
 	}
 	document.querySelector('.product-info').innerHTML += html;
@@ -89,7 +94,7 @@ function searchCust(){
 	$.ajax({
 		url : "/erp/cust",
 		method : "get",
-		data : { "type" : type},
+		data : { "type" : type , "search" : search},
 		success : (r)=>{
 			console.log(r)
 			let html = ``;
@@ -146,7 +151,7 @@ function searchProduct(listno){
 	$.ajax({
 		url : "/erp/product",
 		method : "get",
-		data : { "type" : type},
+		data : { "type" : type , "search" : search},
 		success : (r)=>{
 			console.log(r)
 			let html = ``;
@@ -174,13 +179,13 @@ function selectproduct(pno,listno){
 	})
 	document.querySelectorAll('.product')[listno].value = productInfo.pname;
 	document.querySelectorAll('.product')[listno].dataset.pno = pno;
-	document.querySelectorAll('.pprice')[listno].value = productInfo.pprice;
+	document.querySelectorAll('.pprice')[listno].value = productInfo.pprice.toLocaleString();
 	closeModal()
 }
 
 function gettotalPrice(listno){
-	let pprice = document.querySelectorAll('.pprice')[listno].value
+	let pprice = (document.querySelectorAll('.pprice')[listno].value)*1
 	let quantity = document.querySelectorAll('.quantity')[listno].value
 	let totalprice = pprice * quantity
-	document.querySelectorAll('.totalPrice')[listno].value = totalprice;
+	document.querySelectorAll('.totalPrice')[listno].value = totalprice.toLocaleString();
 }

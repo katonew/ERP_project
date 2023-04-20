@@ -57,7 +57,7 @@ public class CustDao extends Dao{
 		} catch (Exception e) {System.out.println("allcust 오류 : "+e);}
 		return list;
 	}
-	
+	// 거래처 수정 함수
 	public boolean custupdate(CustDto dto) {
 		String sql = "update cust set cname =? , custemp =? ,custphone=?,custaddress=? where custno = ?";
 		try {
@@ -72,7 +72,7 @@ public class CustDao extends Dao{
 		} catch (Exception e) {System.out.println("custupdate 오류 : "+e);}
 		return false;
 	}
-	
+	// 거래처 삭제 함수
 	public boolean deleteCust(int custno) {
 		String sql = "delete from cust where custno = ?";
 		try {
@@ -82,6 +82,24 @@ public class CustDao extends Dao{
 			if(count==1) {return true;}
 		} catch (Exception e) {System.out.println("deleteCust 오류 : "+e);}
 		return false;
+	}
+	// 거래처 검색 함수
+	public ArrayList<CustDto> searchcust(String search){
+		ArrayList<CustDto> result = new ArrayList<>();
+		String sql = "select *from cust where cname like  ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, "%"+search+"%");
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				CustDto dto = new CustDto(rs.getInt(1), rs.getString(2), rs.getString(3), 
+						rs.getString(4), rs.getString(5), rs.getInt(6));
+				result.add(dto);
+			}
+		} catch (Exception e) {
+			System.out.println("searchcust 오류 : "+e);
+		}
+		return result;
 	}
 
 }
