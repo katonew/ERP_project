@@ -9,16 +9,25 @@
 </head>
 <body>
 	<%@ include file = "/header.jsp" %>
-	
+	<div class="modal_wrap">
+		<div class="modal_box">
+			<h3 class="modal_title">
+				<!-- 제목이 들어가는 자리  -->
+			</h3>
+			<div class="modal_content">
+				<!-- 내용이 들어가는 자리  -->
+			</div>
+			<div class="modal_btns">
+			</div>
+		</div>
+	</div>
 	
 	<div class="container">
 		<h3>발주 목록</h3>
 	
 	
 		<table id="exampleTable" class="table table-bordered">
-	
 		  <thead>
-		
 		    <tr>
 		      	<th>발주번호</th>
 				<th>거래처</th>

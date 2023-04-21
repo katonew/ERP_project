@@ -85,15 +85,17 @@ function updatemodal(rno){
 					<th>발주수량</th>
 					<th>단가</th>
 					<th>금액</th>
+					<th>비고></th>
 				</tr>`
 	let totalprice = 0;
-	rinfo.products.forEach((o)=>{
+	rinfo.products.forEach((o,i)=>{
 		html += 
 		`<tr class="product-group"> 
 			<td><input class="product" value="${o.pname}" readonly></td>
-			<td><input class="quantity" value="${o.quantity}" onchange="gettotalPrice(${o})"></td>
-			<td><input class="pprice" value="${o.pprice.toLocaleString()}" readonly></td>
+			<td><input type="number" id="${o.ino}" class="quantity" value="${o.quantity}" onchange="gettotalPrice(${i})"></td>
+			<td><input class="pprice" value="${o.pprice}" readonly></td>
 			<td><input class="totalPrice" value="${(o.pprice*o.quantity).toLocaleString()}" readonly></td>
+			<td><button type="button" onclick="idelete(${o.ino},${i})">삭제</td>
 		</tr>`
 		totalprice += o.pprice*o.quantity
 	})
@@ -127,28 +129,42 @@ function deletemodal(rno){
 	`<button onclick="rdelete(${rno})" type="button">확인</button>
 	<button onclick="closeModal()" class="modal_cencel" type="button">닫기</button>`
 }
+
 // 수정함수
-function rupdate(rno){
-	let custno = document.querySelector('.cust').value
-	let pno = document.querySelector('.product').value
-	let quantity = document.querySelector('.quantity').value
-	$.ajax({
-		url : "/erp/request",
-		method : "put",
-		data : { 
-			"rno" : rno,
-			"custno" : custno ,
-			"pno" : pno,
-			"quantity" : quantity
-		},
-		success : (r)=>{
-			console.log(r)
-			if(r=='true'){
-				alert('수정성공')
-				location.href="/erp/request/allrequest.jsp"
-			}
-		}
-	})
+function rupdate(rno) {
+	let products = []
+	let productGroups = document.querySelectorAll('.product-group')
+	for(let i=0; i<productGroups.length; i++){
+		let ino = productGroups[i].querySelector('.quantity').id
+		console.log(ino)
+		let quantity = productGroups[i].querySelector('.quantity').value
+		if(ino && quantity){ 
+			products.push({ "ino" :ino, "quantity" : quantity})
+    }
+  }
+  console.log(products)
+  $.ajaxSettings.traditional = true
+  $.ajax({
+    url : "/erp/request/info_product",
+    method : "put",
+    contentType : "application/json",
+    data : JSON.stringify({
+      "custno" : 1 ,
+      "delivery_date" : 1,
+      "empno" : 1,
+      "comno" : 1,
+      "products" : products
+    }),
+    success : (r)=>{
+      console.log(r)
+      if(r=='true'){
+        alert('발주 수정 성공')
+        location.href="/erp/request/allrequest.jsp";
+      }else{
+        alert('발주 수정 실패')
+      }
+    }
+  })
 }
 
 // 삭제 함수
@@ -157,7 +173,7 @@ function rdelete(rno){
 	$.ajax({
 		url : "/erp/request",
 		method : "delete",
-		data : { "rno" : rno },
+		data : { "rno" : rno , "type" : 1 },
 		success : (r)=>{
 			console.log(r)
 			if(r=='true'){
@@ -190,7 +206,7 @@ function onDone(rno, state){
 	})
 }
 
-
+//총 금액 계산하기
 function gettotalPrice(listno){
 	let pprice = (document.querySelectorAll('.pprice')[listno].value)*1
 	let quantity = document.querySelectorAll('.quantity')[listno].value
@@ -198,7 +214,20 @@ function gettotalPrice(listno){
 	document.querySelectorAll('.totalPrice')[listno].value = totalprice.toLocaleString();
 }
 
-
+function idelete(ino,listno){
+	$.ajax({
+		url : "/erp/request",
+		method : "delete",
+		data : { "ino" : ino , "type" : 2},
+		success : (r)=>{
+			console.log('ino 삭제')
+		}
+	})
+	document.querySelectorAll('.product')[listno].value = "";
+	document.querySelectorAll('.pprice')[listno].value = "";
+	document.querySelectorAll('.quantity')[listno].value = "";
+	document.querySelectorAll('.totalPrice')[listno].value = "";
+}
 
 
 

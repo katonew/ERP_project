@@ -93,9 +93,16 @@ public class Request extends HttpServlet {
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		System.out.println("가져온 rno : " + request.getParameter("rno"));
-		int rno = Integer.parseInt(request.getParameter("rno"));
-		boolean result = RequestDao.getInstance().requestDelete(rno);
+		String type = (String)request.getParameter("type");
+		boolean result = false;
+		if(type.equals("1")) {
+			int rno = Integer.parseInt(request.getParameter("rno"));
+			result = RequestDao.getInstance().requestDelete(rno);
+		}else if(type.equals("2")) {
+			int ino = Integer.parseInt(request.getParameter("ino"));
+			result = RequestDao.getInstance().infodelete(ino);
+		}
+		
 		response.getWriter().print(result);
 	}
 

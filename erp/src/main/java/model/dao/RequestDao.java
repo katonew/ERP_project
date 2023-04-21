@@ -151,5 +151,28 @@ public class RequestDao extends Dao{
 		return false;
 	}
 	
+	// 발주안의 상품등록정보 삭제
+	public boolean infodelete(int ino) {
+		String sql = "delete from info_request where ino = "+ ino;
+		try {
+			ps = con.prepareStatement(sql);
+			int count = ps.executeUpdate();
+			if(count==1) {return true;}
+		} catch (Exception e) {System.out.println("infodelete 오류 : "+e);}
+		return false;
+	}
+	
+	public boolean iupdate(int ino, int quantity) {
+		String sql = "update info_request set quantity=? where ino = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, quantity);
+			ps.setInt(2, ino);
+			int count = ps.executeUpdate();
+			if(count==1) {return true;}
+		} catch (Exception e) {System.out.println("iupdate 오류 : "+e);}
+		return false;
+	}
+	
 
 }

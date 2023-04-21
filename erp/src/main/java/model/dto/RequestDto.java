@@ -147,13 +147,19 @@ public class RequestDto {
 	public void setComno(int comno) {
 		this.comno = comno;
 	}
+	
+	
 
 
 	@Override
 	public String toString() {
-		return "RequestDto [rno=" + rno + ", enter_date=" + enter_date + ", delivery_date=" + delivery_date + ", empno="
-				+ empno + ", custno=" + custno + ", comno=" + comno + ", empname=" + empname + ", cname=" + cname + "]";
+		return "RequestDto [rno=" + rno + ", enter_date=" + enter_date + ", delivery_date=" + delivery_date + ", state="
+				+ state + ", empno=" + empno + ", custno=" + custno + ", comno=" + comno + ", empname=" + empname
+				+ ", cname=" + cname + ", products=" + products + "]";
 	}
+
+
+	
 
 	
 	

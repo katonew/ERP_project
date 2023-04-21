@@ -179,7 +179,7 @@ function selectproduct(pno,listno){
 	})
 	document.querySelectorAll('.product')[listno].value = productInfo.pname;
 	document.querySelectorAll('.product')[listno].dataset.pno = pno;
-	document.querySelectorAll('.pprice')[listno].value = productInfo.pprice.toLocaleString();
+	document.querySelectorAll('.pprice')[listno].value = productInfo.pprice;
 	closeModal()
 }
 
