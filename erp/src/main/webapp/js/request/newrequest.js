@@ -14,7 +14,7 @@ function print(){
 		      <td>
 		        <input class="product" ondblclick="productmodal(${i})">
 		      </td>
-		      <td><input class="quantity" onchange="gettotalPrice(${i})" type="number"></td>
+		      <td><input class="quantity" onchange="gettotalPrice(${i})" type="number" min="0"></td>
 		      <td><input class="pprice" readonly></td>
 		      <td><input class="totalPrice" readonly></td>
 		    </tr>`
