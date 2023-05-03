@@ -1,5 +1,7 @@
 package model.dao;
 
+import java.util.ArrayList;
+
 import model.dto.emp.EmpDto;
 
 public class MemberDao extends Dao{
@@ -59,5 +61,42 @@ public class MemberDao extends Dao{
 		}
 		return 0;
 	} // getEmpInfo e
+	
+	// 직원 리스트 전부 반환 함수
+	public ArrayList<EmpDto> getAllList(int comno) {
+		ArrayList<EmpDto> list = new ArrayList<>();
+		String sql = "select e.empno,e.ename,d.dname from emp e natural join dept d where comno = " + comno;
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				EmpDto dto = new EmpDto(rs.getInt(1), rs.getString(2), rs.getString(3));
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			System.out.println("getAllList 오류 : " + e);
+		}
+		return list;
+	}
+	// 검색결과에 따른 직원 리스트 반환 함수
+	public ArrayList<EmpDto> getSearchList(int comno, String search) {
+		ArrayList<EmpDto> list = new ArrayList<>();
+		String sql = "select e.empno,e.ename,d.dname from emp e natural join dept d where comno = ? and ename like ? ";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, comno);
+			ps.setString(2, "%"+search+"%");
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				EmpDto dto = new EmpDto(rs.getInt(1), rs.getString(2), rs.getString(3));
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			System.out.println("getAllList 오류 : " + e);
+		}
+		return list;
+	}
+	
+	
 	
 }

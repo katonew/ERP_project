@@ -12,8 +12,20 @@
 	<%@ include file = "/header.jsp" %>
 	<div class="container">
 		<h3>기안 등록 페이지</h3>
-		<div>결재라인</div>
+		<div>
+			<h5>결재라인</h5>
+			<table class="table selectLine">
+				<tr>
+					<th>결재자</th>
+					<th>직책</th>
+					<th>결재순서</th>
+				</tr>
+			</table>
+		</div>
 		<div>수신참조</div>
+		<div>
+			<input class="title" type="text" placeholder="제목">
+		</div>
 		<div>첨부파일추가</div>
 		<form method="post">
 		  <textarea id="summernote" name="editordata"></textarea>

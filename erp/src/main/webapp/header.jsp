@@ -41,6 +41,7 @@
 					<li><a href="/erp/cust/allcust.jsp">거래처 </a></li>
 					<li><a href="/erp/product/allproduct.jsp">상품</a></li>
 					<li><a href="/erp/request/allrequest.jsp">발주</a></li>
+					<li><a href="#">기안</a></li>
 				</ul>
 			
 			<div class="submenu"></div>

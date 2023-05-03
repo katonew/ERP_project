@@ -17,6 +17,9 @@ public class EmpDto {
     private int authority;		//권한정보
     private int dno;			//부서번호(FK)
     private int comno;			//회사번호(FK)
+    // 추가
+    private String dname;		// 부서명
+    
     
     public EmpDto() {
 		// TODO Auto-generated constructor stub
@@ -42,7 +45,21 @@ public class EmpDto {
 		this.comno = comno;
 	}
 	
-	
+	// 출력용
+	public EmpDto(int empno, String ename, String dname) {
+		super();
+		this.empno = empno;
+		this.ename = ename;
+		this.dname = dname;
+	}
+
+	public String getDname() {
+		return dname;
+	}
+
+	public void setDname(String dname) {
+		this.dname = dname;
+	}
 
 	public int getEmpno() {
 		return empno;
