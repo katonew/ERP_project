@@ -15,7 +15,7 @@ public class RequestDao extends Dao{
 	public static RequestDao getInstance() { return dao; }
 	
 	// 발주 등록 함수
-	public boolean newrequest(RequestDto dto) {
+	public boolean newrequest(RequestDto dto) { 
 		String sql = "insert into request(delivery_date,empno,custno,comno) values (?,?,?,?)";
 		try {
 			ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
